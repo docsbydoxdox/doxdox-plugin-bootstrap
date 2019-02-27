@@ -1,226 +1,231 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="initial-scale=1">
-<title>{{title}}{{#if pkg.version}} {{pkg.version}}{{/if}}{{#if description}} &#8212; {{description}}{{/if}}</title>
-{{#if description}}
-<meta name="description" content="{{description}}">
-{{/if}}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-<style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>{{title}}{{#if pkg.version}} {{pkg.version}}{{/if}}{{#if description}} &#8212; {{description}}{{/if}}</title>
+    {{#if description}}
+    <meta name="description" content="{{description}}">
+    {{/if}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <style>
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: searchfield-cancel-button;
+        }
 
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: searchfield-cancel-button;
-}
+        .jumbotron {
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: #2B303E;
+            -webkit-font-smoothing: antialiased;
+        }
 
-.jumbotron {
-    margin-bottom: 0;
-    border-radius: 0;
-    background-color: #2B303E;
-    -webkit-font-smoothing: antialiased;
-}
+        .jumbotron h1 {
+            font-size: 3.5rem;
+            line-height: 1;
+        }
 
-.jumbotron h1 {
-    font-size: 3.5rem;
-    line-height: 1;
-}
+        .jumbotron h1,
+        .jumbotron h1 a {
+            color: #eee;
+        }
 
-.jumbotron h1,
-.jumbotron h1 a {
-    color: #eee;
-}
+        .jumbotron small {
+            font-weight: 200;
+            color: #777;
+        }
 
-.jumbotron small {
-    font-weight: 200;
-    color: #777;
-}
+        .jumbotron p {
+            font-size: 1.5rem;
+            font-weight: 200;
+            line-height: 1.2;
+            color: #ccc;
+        }
 
-.jumbotron p {
-    font-size: 1.5rem;
-    font-weight: 200;
-    line-height: 1.2;
-    color: #ccc;
-}
+        .wrap {
+            padding: 2rem 1rem;
+        }
 
-.wrap {
-    padding: 2rem 1rem;
-}
+        .search {
+            margin: 0 0 1rem 0;
+            width: 90%;
+        }
 
-.search {
-    margin: 0 0 1rem 0;
-    width: 90%;
-}
+        .menu {
+            padding: 0;
+        }
 
-.menu {
-    padding: 0;
-}
+        .menu li {
+            list-style: none;
+        }
 
-.menu li {
-    list-style: none;
-}
+        .menu li ul {
+            padding: 0;
+        }
 
-.menu li ul {
-    padding: 0;
-}
+        .menu li a {
+            display: block;
+            padding: .25rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.menu li a {
-    display: block;
-    padding: .25rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        .menu .file {
+            color: #E54D89;
+        }
 
-.menu .file {
-    color: #E54D89;
-}
+        .menu .file+ul {
+            margin: 0 0 1rem 0;
+        }
 
-.menu .file + ul {
-    margin: 0 0 1rem 0;
-}
+        .menu .scope-private a {
+            color: #8BAAC6;
+        }
 
-.menu .scope-private a {
-    color: #8BAAC6;
-}
+        .method {
+            margin: 0 0 4rem 0;
+        }
 
-.method {
-    margin: 0 0 4rem 0;
-}
+        .method .method-name {
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-.method .method-name {
-    display: inline-block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        .method .method-name+.scope-private {
+            color: #AAAAAA;
+        }
 
-.method .method-name + .scope-private {
-    color: #AAAAAA;
-}
+        .method section {
+            margin: 2rem 0;
+        }
 
-.method section {
-    margin: 2rem 0;
-}
+        .method h3 {
+            margin: 0 0 1rem 0;
+        }
 
-.method h3 {
-    margin: 0 0 1rem 0;
-}
+        .method .table,
+        .method .table p,
+        .method .table ol,
+        .method .table ul {
+            margin: 0;
+        }
 
-.method .table,
-.method .table p,
-.method .table ol,
-.method .table ul {
-    margin: 0;
-}
+        .permalink {
+            position: absolute;
+            margin-left: -1em;
+            font-weight: normal;
+            color: #eee;
+            text-decoration: none;
+        }
 
-.permalink {
-    position: absolute;
-    margin-left: -1em;
-    font-weight: normal;
-    color: #eee;
-    text-decoration: none;
-}
+        .permalink:hover {
+            color: #E54D89;
+        }
 
-.permalink:hover {
-    color: #E54D89;
-}
+        .back-to-top {
+            display: none;
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            padding: .5rem .6rem;
+            line-height: 1;
+            background: #fff;
+            z-index: 999;
+        }
 
-.back-to-top {
-    display: none;
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    padding: .5rem .6rem;
-    line-height: 1;
-    background: #fff;
-    z-index: 999;
-}
+        .back-to-top.visible {
+            display: block;
+        }
 
-.back-to-top.visible {
-    display: block;
-}
+        .back-to-top svg {
+            vertical-align: middle;
+        }
 
-.back-to-top svg {
-    vertical-align: middle;
-}
-
-.bs-footer {
-    margin: 3rem auto;
-    color: #777;
-    text-align: center;
-}
-
-</style>
+        .bs-footer {
+            margin: 3rem auto;
+            color: #777;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
 
-<a href="#" class="back-to-top"><svg xmlns="http://www.w3.org/2000/svg" width="13px" height="14px" viewBox="0 0 13 14"><path d="M7.18761156,13 L7.18761156,5.49249703 L10.4587853,5.49249703 L5.09931763,0.113558129 L-0.26015,5.49249703 L3.01102371,5.49249703 L3.01102371,13 L7.18761156,13 Z" fill="#428bca"></path></svg> Back to Top</a>
+    <a href="#" class="back-to-top"><svg xmlns="http://www.w3.org/2000/svg" width="13px" height="14px"
+            viewBox="0 0 13 14">
+            <path
+                d="M7.18761156,13 L7.18761156,5.49249703 L10.4587853,5.49249703 L5.09931763,0.113558129 L-0.26015,5.49249703 L3.01102371,5.49249703 L3.01102371,13 L7.18761156,13 Z"
+                fill="#428bca"></path>
+        </svg> Back to Top</a>
 
-<div class="jumbotron">
+    <div class="jumbotron">
 
-    <div class="container">
+        <div class="container">
 
-        <h1>
-            {{#if pkg.homepage}}
+            <h1>
+                {{#if pkg.homepage}}
                 <a href="{{pkg.homepage}}">{{title}}</a>
-            {{else}}
+                {{else}}
                 {{title}}
-            {{/if}}
-            {{#if pkg.version}}<small>{{pkg.version}}</small>{{/if}}
-        </h1>
+                {{/if}}
+                {{#if pkg.version}}<small>{{pkg.version}}</small>{{/if}}
+            </h1>
 
-        {{#if description}}<p>{{description}}</p>{{/if}}
+            {{#if description}}<p>{{description}}</p>{{/if}}
+
+        </div>
 
     </div>
 
-</div>
+    <div class="wrap">
 
-<div class="wrap">
+        <div class="container">
 
-    <div class="container">
+            <div class="row">
 
-        <div class="row">
+                <div class="col-md-3 hidden-sm hidden-xs">
 
-            <div class="col-md-3 hidden-sm hidden-xs">
+                    <input type="search" class="form-control search" id="search-methods" placeholder="Search..."
+                        autocomplete="off">
 
-                <input type="search" class="form-control search" id="search-methods" placeholder="Search..." autocomplete="off">
+                    <ul class="menu">
 
-                <ul class="menu">
+                        {{#each files}}
 
-                    {{#each files}}
+                        <li>
+                            <a href="#{{name}}" class="file"><b>{{name}}</b></a>
+                            <ul>
 
-                    <li>
-                        <a href="#{{name}}" class="file"><b>{{name}}</b></a>
-                        <ul>
+                                {{#each methods}}
 
-                        {{#each methods}}
+                                <li class="method-link scope-{{#if isPrivate}}private{{else}}public{{/if}}">
+                                    <a href="#{{uid}}" title="{{name}}">{{name}}</a>
+                                </li>
 
-                        <li class="method-link scope-{{#if isPrivate}}private{{else}}public{{/if}}">
-                            <a href="#{{uid}}" title="{{name}}">{{name}}</a>
+                                {{/each}}
+
+                            </ul>
+
                         </li>
 
                         {{/each}}
 
-                        </ul>
+                    </ul>
 
-                    </li>
+                </div>
 
-                    {{/each}}
+                <div class="col-md-9">
 
-                </ul>
+                    {{#each files}}
 
-            </div>
+                    <a id="{{name}}"></a>
 
-            <div class="col-md-9">
-
-                {{#each files}}
-
-                <a id="{{name}}"></a>
-
-                {{#each methods}}
+                    {{#each methods}}
 
                     <div class="method scope-{{#if isPrivate}}private{{else}}public{{/if}}">
 
@@ -257,22 +262,22 @@ input[type="search"]::-webkit-search-cancel-button {
                                     </thead>
 
                                     <tbody>
-                                    {{#each tags.param}}
-                                    <tr>
-                                        <td>{{name}}</td>
-                                        <td>
-                                            {{#each types}}
-                                            <code>{{.}}</code>
-                                            {{/each}}
-                                        </td>
-                                        <td>{{{markdown description}}}</td>
-                                        <td>
-                                            {{#if isOptional}}
+                                        {{#each tags.param}}
+                                        <tr>
+                                            <td>{{name}}</td>
+                                            <td>
+                                                {{#each types}}
+                                                <code>{{.}}</code>
+                                                {{/each}}
+                                            </td>
+                                            <td>{{{markdown description}}}</td>
+                                            <td>
+                                                {{#if isOptional}}
                                                 <span class="tag tag-default">Optional</span>
-                                            {{/if}}
-                                        </td>
-                                    </tr>
-                                    {{/each}}
+                                                {{/if}}
+                                            </td>
+                                        </tr>
+                                        {{/each}}
                                     </tbody>
 
                                 </table>
@@ -301,22 +306,22 @@ input[type="search"]::-webkit-search-cancel-button {
                                     </thead>
 
                                     <tbody>
-                                    {{#each tags.property}}
-                                    <tr>
-                                        <td>{{name}}</td>
-                                        <td>
-                                            {{#each types}}
-                                            <code>{{.}}</code>
-                                            {{/each}}
-                                        </td>
-                                        <td>{{{markdown description}}}</td>
-                                        <td>
-                                            {{#if isOptional}}
+                                        {{#each tags.property}}
+                                        <tr>
+                                            <td>{{name}}</td>
+                                            <td>
+                                                {{#each types}}
+                                                <code>{{.}}</code>
+                                                {{/each}}
+                                            </td>
+                                            <td>{{{markdown description}}}</td>
+                                            <td>
+                                                {{#if isOptional}}
                                                 <span class="tag tag-default">Optional</span>
-                                            {{/if}}
-                                        </td>
-                                    </tr>
-                                    {{/each}}
+                                                {{/if}}
+                                            </td>
+                                        </tr>
+                                        {{/each}}
                                     </tbody>
 
                                 </table>
@@ -334,7 +339,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
                             {{#each tags.example}}
 
-                                <pre><code class="hljs javascript">{{{highlightBlock .}}}</code></pre>
+                            <pre><code class="hljs javascript">{{{highlightBlock .}}}</code></pre>
 
                             {{/each}}
 
@@ -348,17 +353,17 @@ input[type="search"]::-webkit-search-cancel-button {
 
                             {{#if tags.return.length}}
 
-                                {{#each tags.return}}
+                            {{#each tags.return}}
 
-                                    <p>
-                                        {{#each types}}
-                                            <code>{{.}}</code>
-                                        {{/each}}
-                                    </p>
-
-                                    {{{markdown description}}}
-
+                            <p>
+                                {{#each types}}
+                                <code>{{.}}</code>
                                 {{/each}}
+                            </p>
+
+                            {{{markdown description}}}
+
+                            {{/each}}
 
                             {{else}}
 
@@ -370,9 +375,11 @@ input[type="search"]::-webkit-search-cancel-button {
 
                     </div>
 
-                {{/each}}
+                    {{/each}}
 
-                {{/each}}
+                    {{/each}}
+
+                </div>
 
             </div>
 
@@ -380,112 +387,111 @@ input[type="search"]::-webkit-search-cancel-button {
 
     </div>
 
-</div>
+    <footer class="bs-footer">
 
-<footer class="bs-footer">
+        <div class="container">
 
-    <div class="container">
+            <p>Documentation generated with <a href="https://github.com/neogeek/doxdox">doxdox</a>.</p>
 
-        <p>Documentation generated with <a href="https://github.com/neogeek/doxdox">doxdox</a>.</p>
+        </div>
 
-    </div>
+    </footer>
 
-</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>
+        (function () {
 
-(function () {
+            'use strict';
 
-    'use strict';
+            var headerHeight = $('.jumbotron').outerHeight(true),
+                $backToTop = $('.back-to-top');
 
-    var headerHeight = $('.jumbotron').outerHeight(true),
-        $backToTop = $('.back-to-top');
+            function handleScrollEvent() {
 
-    function handleScrollEvent() {
+                if (window.scrollY > headerHeight && $backToTop.not('.visible')) {
 
-        if (window.scrollY > headerHeight && $backToTop.not('.visible')) {
+                    $backToTop.addClass('visible');
 
-            $backToTop.addClass('visible');
+                } else if (window.scrollY < headerHeight && $backToTop.is('.visible')) {
 
-        } else if (window.scrollY < headerHeight && $backToTop.is('.visible')) {
+                    $backToTop.removeClass('visible');
 
-            $backToTop.removeClass('visible');
-
-        }
-
-    }
-
-    $('pre code:not(.hljs)').each(function () {
-        hljs.highlightBlock(this);
-    });
-
-    var $searchInput = $('#search-methods');
-    var $methodLinks = $('.method-link');
-    var $methodNames = $('.method .method-name');
-
-    var urlQuery = window.location.search.match(/q=([^&]+)/);
-
-    $searchInput.on('keyup', function (e) {
-
-        var query = new RegExp(e.target.value.replace(' ', '|'), 'ig');
-
-        $methodLinks.each(function () {
-
-            var $this = $(this);
-
-            if (!$this.text().match(query)) {
-
-                $this.hide();
-
-            } else {
-
-                $this.show();
+                }
 
             }
 
-        });
+            $('pre code:not(.hljs)').each(function () {
+                hljs.highlightBlock(this);
+            });
 
-        $methodNames.each(function () {
+            var $searchInput = $('#search-methods');
+            var $methodLinks = $('.method-link');
+            var $methodNames = $('.method .method-name');
 
-            var $this = $(this);
+            var urlQuery = window.location.search.match(/q=([^&]+)/);
 
-            if (!$this.text().match(query)) {
+            $searchInput.on('keyup', function (e) {
 
-                $this.closest('.method').hide();
+                var query = new RegExp(e.target.value.replace(' ', '|'), 'ig');
 
-            } else {
+                $methodLinks.each(function () {
 
-                $this.closest('.method').show();
+                    var $this = $(this);
+
+                    if (!$this.text().match(query)) {
+
+                        $this.hide();
+
+                    } else {
+
+                        $this.show();
+
+                    }
+
+                });
+
+                $methodNames.each(function () {
+
+                    var $this = $(this);
+
+                    if (!$this.text().match(query)) {
+
+                        $this.closest('.method').hide();
+
+                    } else {
+
+                        $this.closest('.method').show();
+
+                    }
+
+                });
+
+                window.history.replaceState({}, '', window.location.pathname + '?q=' + e.target.value);
+
+            });
+
+            $searchInput.on('search', function () {
+
+                $searchInput.trigger('keyup');
+
+            });
+
+            if (urlQuery && urlQuery.length > 1) {
+
+                $searchInput.val(urlQuery[1]).trigger('keyup');
 
             }
 
-        });
+            $(window).on('scroll', handleScrollEvent);
 
-        window.history.replaceState({}, '', window.location.pathname + '?q=' + e.target.value);
+            handleScrollEvent();
 
-    });
+        })();
 
-    $searchInput.on('search', function () {
-
-        $searchInput.trigger('keyup');
-
-    });
-
-    if (urlQuery && urlQuery.length > 1) {
-
-        $searchInput.val(urlQuery[1]).trigger('keyup');
-
-    }
-
-    $(window).on('scroll', handleScrollEvent);
-
-    handleScrollEvent();
-
-})();
-
-</script>
+    </script>
 
 </body>
+
 </html>
