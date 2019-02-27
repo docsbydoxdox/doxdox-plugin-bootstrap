@@ -1,4 +1,4 @@
-# [doxdox-plugin-bootstrap](https://github.com/neogeek/doxdox-plugin-bootstrap) *1.1.8*
+# [doxdox-plugin-bootstrap](https://github.com/neogeek/doxdox-plugin-bootstrap) *2.0.0*
 
 > Bootstrap template plugin for doxdox.
 
